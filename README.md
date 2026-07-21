@@ -3,8 +3,8 @@
 > 마감이 코앞에 와야 움직이는 사람들을 위한 타임박싱 데스크탑 앱
 
 <p align="center">
-  <img src="docs/resources/capture_home.png" alt="홈 화면" width="420" />
-  <img src="docs/resources/always-on-top-floating-timer-context.png" alt="항상 위에 떠 있는 타이머 위젯" width="280" />
+  <img src="docs/resources/capture_home.png" alt="홈 화면" width="380" />
+  <img src="docs/resources/always-on-top-floating-timer-context.png" alt="항상 위에 떠 있는 타이머 위젯" width="380" />
 </p>
 
 ## 소개
