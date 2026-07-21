@@ -35,7 +35,8 @@
   font-size: clamp(20px, 7vw, 32px);
   font-weight: 700;
   font-variant-numeric: tabular-nums;
-  letter-spacing: 0.3px;
+  /* 큰 숫자는 음수 자간으로 조여야 단단해 보인다 (techniques.md 큰 제목 규칙) */
+  letter-spacing: -0.02em;
   color: var(--color-text);
 }
 

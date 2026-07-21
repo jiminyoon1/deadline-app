@@ -28,11 +28,13 @@
   font-weight: 500;
   font-family: inherit;
   cursor: pointer;
-  transition: opacity var(--transition-fast), color var(--transition-fast);
+  transition:
+    background var(--transition-fast),
+    color var(--transition-fast);
 }
 
 .navButton:hover {
-  opacity: 0.7;
+  background: var(--color-bg-soft);
   color: var(--color-text);
 }
 

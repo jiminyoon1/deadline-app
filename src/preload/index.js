@@ -43,6 +43,7 @@ const api = {
     show: () => ipcRenderer.invoke('widget:show'),
     hide: () => ipcRenderer.invoke('widget:hide'),
     setMode: (mode) => ipcRenderer.invoke('widget:setMode', mode),
+    setHintVisible: (visible) => ipcRenderer.invoke('widget:setHintVisible', visible),
     getPosition: () => ipcRenderer.invoke('widget:getPosition'),
     moveTo: (x, y) => ipcRenderer.invoke('widget:moveTo', { x, y })
   }

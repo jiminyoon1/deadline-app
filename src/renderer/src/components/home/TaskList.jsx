@@ -72,7 +72,12 @@ export default function TaskList({
   return (
     <>
       {tasks.length === 0 ? (
-        <p className={styles.empty}>아직 등록된 할 일이 없어요.</p>
+        <div className={styles.emptyState}>
+          <p className={styles.empty}>아직 등록된 할 일이 없어요.</p>
+          <p className={styles.emptyHint}>
+            오늘 할 일을 순서대로 등록해두면, 끝날 때마다 자동으로 다음 일로 넘어가요.
+          </p>
+        </div>
       ) : (
         <>
           {activeTasks.length === 0 ? (

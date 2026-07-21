@@ -12,9 +12,10 @@
   overflow: hidden;
 }
 
+/* 타이포 스케일의 body/태스크명 역할(14/500) — 600·15px는 스케일에 없는 값이었다 */
 .taskName {
-  font-size: 15px;
-  font-weight: 600;
+  font-size: 14px;
+  font-weight: 500;
   text-align: center;
   color: var(--color-text);
   max-width: 100%;
@@ -41,16 +42,98 @@
   background: var(--color-bg);
   color: var(--color-text-sub);
   cursor: pointer;
-  transition: opacity 0.15s;
+  transition:
+    background var(--transition-fast),
+    border-color var(--transition-fast),
+    color var(--transition-fast);
 }
 
+/* 흰 배경 위 흰 버튼은 opacity 페이드가 거의 안 보인다 — 나머지 앱처럼 배경 틴트로 */
 .controlButton:hover:not(:disabled) {
-  opacity: 0.7;
+  background: var(--color-bg-soft);
+  border-color: var(--color-text-faint);
+  color: var(--color-text);
+}
+
+.controlButton:active:not(:disabled) {
+  transform: scale(0.93);
 }
 
 .controlButton:disabled {
   opacity: 0.4;
   cursor: not-allowed;
+}
+
+.previewActions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+/* 1회성 안내는 본문과 다른 표면(틴트 카드)에 담아야 "임시로 뜬 도움말"로 읽힌다.
+   본문과 같은 회색 텍스트로만 두면 원래 있던 UI 문구와 구분이 안 된다. */
+@keyframes hintIn {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hintCard {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  max-width: 240px;
+  padding: 10px 10px 10px 12px;
+  border-radius: var(--radius-sm);
+  background: var(--color-primary-tint);
+  animation: hintIn 180ms ease-out;
+}
+
+.hintCard svg {
+  flex-shrink: 0;
+  margin-top: 1px;
+  color: var(--color-primary);
+}
+
+.hintText {
+  flex: 1;
+  text-align: left;
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--color-text);
+  margin: 0;
+}
+
+.hintClose {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  margin-top: -1px;
+  border: none;
+  border-radius: 10px;
+  background: transparent;
+  color: var(--color-primary);
+  cursor: pointer;
+  transition: background var(--transition-fast);
+}
+
+.hintClose:hover {
+  background: var(--color-primary-tint-strong);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hintCard {
+    animation: none;
+  }
 }
 
 .startButton {
@@ -67,11 +150,17 @@
   font-weight: 600;
   font-family: inherit;
   cursor: pointer;
-  transition: opacity 0.15s;
+  transition:
+    opacity var(--transition-fast),
+    transform var(--transition-fast);
 }
 
 .startButton:hover {
   opacity: 0.85;
+}
+
+.startButton:active {
+  transform: scale(0.97);
 }
 
 .navRow {
@@ -92,10 +181,16 @@
   font-weight: 500;
   font-family: inherit;
   cursor: pointer;
-  transition: opacity 0.15s, color 0.15s;
+  transition:
+    background var(--transition-fast),
+    color var(--transition-fast);
 }
 
 .navButton:hover {
-  opacity: 0.7;
+  background: var(--color-bg-soft);
   color: var(--color-text);
+}
+
+.navButton:active {
+  transform: scale(0.97);
 }

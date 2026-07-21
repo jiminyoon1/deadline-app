@@ -69,16 +69,59 @@
 
 /* ── 확장 알약 (c9s8D) ── */
 .pill {
+  position: relative;
   display: flex;
   align-items: center;
   gap: 10px;
   width: 300px;
   height: 60px;
-  padding: 8px 16px 8px 10px;
+  /* 오른쪽 패딩을 살짝 늘려 pillClose 전용 세로 통로(x 280~300)를 확보 —
+     ≡ 버튼과 x축이 겹치지 않아 hover 사각지대가 안 생긴다 */
+  padding: 8px 20px 8px 10px;
   border-radius: 30px;
   background: var(--color-bg);
   box-shadow: var(--shadow-float);
   -webkit-app-region: drag;
+}
+
+/* 알약 배경 전체가 -webkit-app-region:drag라, 버튼 하나만 no-drag로 둬도 거기로
+   "다가가는" 마우스 이동 자체가 드래그 영역에서 가로채져 hover가 끊긴다.
+   접근 경로 전체를 no-drag로 만드는 구역을 따로 두고, 그 구역에 hover할 때만 버튼을 보여준다.
+   폭은 .pill의 오른쪽 패딩(20px)과 정확히 맞춰 ≡ 버튼과 x축이 겹치지 않게 하고,
+   세로는 알약 전체 높이를 써서 접근 경로를 넉넉하게 잡는다. */
+.pillCloseZone {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 20px;
+  height: 100%;
+  -webkit-app-region: no-drag;
+}
+
+.pillClose {
+  position: absolute;
+  top: 6px;
+  right: 1px;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  padding: 0;
+  border: none;
+  border-radius: 9px;
+  background: var(--color-bg);
+  color: var(--color-text-sub);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+}
+
+.pillCloseZone:hover .pillClose {
+  display: flex;
+}
+
+.pillClose:hover {
+  background: var(--color-divider);
 }
 
 /* 확장 알약 + 할 일 드롭다운을 세로로 쌓는 컨테이너 */
@@ -127,9 +170,10 @@
   flex: 1;
 }
 
+/* 태스크명 역할(14/500) — 홈 화면의 taskName과 같은 값으로 맞춘다 */
 .taskName {
-  font-size: 13px;
-  font-weight: 600;
+  font-size: 14px;
+  font-weight: 500;
   color: var(--color-text);
   white-space: nowrap;
   overflow: hidden;
@@ -187,5 +231,85 @@
   composes: iconButton;
   background: var(--color-primary-tint);
   color: var(--color-primary);
+}
+
+/* 알약 아래 첫 등장 말풍선 — 위쪽 꼬리가 알약을 가리켜 "이 알약에 대한 설명"임을 보여준다 */
+@keyframes hintBubbleIn {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hintBubble {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  width: 300px;
+  box-sizing: border-box;
+  padding: 10px 10px 10px 12px;
+  margin-top: 6px;
+  border-radius: var(--radius-sm);
+  background: var(--color-bg);
+  box-shadow: var(--shadow-float);
+  animation: hintBubbleIn 180ms ease-out;
+  -webkit-app-region: no-drag;
+}
+
+/* 알약 쪽을 가리키는 꼬리 — 태스크명이 시작되는 자리(pillBody) 근처에 둔다 */
+.hintBubble::before {
+  content: '';
+  position: absolute;
+  top: -6px;
+  left: 34px;
+  width: 12px;
+  height: 12px;
+  background: var(--color-bg);
+  clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+}
+
+.hintBubble svg {
+  flex-shrink: 0;
+  margin-top: 1px;
+  color: var(--color-primary);
+}
+
+.hintText {
+  flex: 1;
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--color-text);
+  margin: 0;
+}
+
+.hintClose {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  margin-top: -1px;
+  border: none;
+  border-radius: 10px;
+  background: transparent;
+  color: var(--color-primary);
+  cursor: pointer;
+  transition: background var(--transition-fast);
+}
+
+.hintClose:hover {
+  background: var(--color-primary-tint-strong);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hintBubble {
+    animation: none;
+  }
 }
 

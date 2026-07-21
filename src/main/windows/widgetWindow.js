@@ -21,9 +21,13 @@ const SIZES = {
 const SUMMARY_BASE_HEIGHT = 180
 const SUMMARY_ROW_HEIGHT = 36
 
+// 첫 등장 말풍선 힌트(알약 아래 말풍선 카드)가 뜨는 동안만 창을 이만큼 더 키운다.
+const HINT_EXTRA_HEIGHT = 92
+
 let widgetMode = 'expanded' // 'mini' | 'expanded' | 'list'
 let lastStatus = 'idle'
 let lastTaskCount = 0
+let hintVisible = false
 
 function summarySize() {
   const workArea = screen.getPrimaryDisplay().workArea
@@ -39,7 +43,10 @@ function sizeForStatus(status) {
   // 휴식도 진행 중과 같은 위젯(미니/알약) UI를 쓴다 — 색만 초록으로 다르다
   if (status === 'running' || status === 'paused' || status === 'resting') {
     if (widgetMode === 'list') return SIZES.list
-    return widgetMode === 'expanded' ? SIZES.pill : SIZES.mini
+    if (widgetMode !== 'expanded') return SIZES.mini
+    return hintVisible
+      ? { width: SIZES.pill.width, height: SIZES.pill.height + HINT_EXTRA_HEIGHT }
+      : SIZES.pill
   }
   if (status === 'dayFinished') return summarySize()
   // 다음 태스크 대기도 알약 UI — 목록을 펼치면 더 큰 패널을 쓴다.
@@ -138,6 +145,13 @@ export function resizeWidgetForStatus(status, taskCount = lastTaskCount) {
 
 export function setWidgetMode(mode) {
   widgetMode = ['expanded', 'list'].includes(mode) ? mode : 'mini'
+  applySize(lastStatus)
+}
+
+// 알약 아래 말풍선 힌트를 보이는 동안만 창을 키운다. 목록을 펼치는 등 다른 모드로
+// 바뀌면 렌더러 쪽에서 false로 되돌려 원래 크기로 복귀시킨다.
+export function setWidgetHintVisible(visible) {
+  hintVisible = Boolean(visible)
   applySize(lastStatus)
 }
 

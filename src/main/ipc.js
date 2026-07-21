@@ -5,6 +5,7 @@ import {
   showWidgetWindow,
   hideWidgetWindow,
   setWidgetMode,
+  setWidgetHintVisible,
   getWidgetPosition,
   moveWidgetTo
 } from './windows/widgetWindow'
@@ -95,6 +96,7 @@ export function registerIpcHandlers() {
   ipcMain.handle('widget:show', () => showWidgetWindow())
   ipcMain.handle('widget:hide', () => hideWidgetWindow())
   ipcMain.handle('widget:setMode', (_e, mode) => setWidgetMode(mode))
+  ipcMain.handle('widget:setHintVisible', (_e, visible) => setWidgetHintVisible(visible))
   ipcMain.handle('widget:getPosition', () => getWidgetPosition())
   ipcMain.handle('widget:moveTo', (_e, { x, y }) => moveWidgetTo(x, y))
 }

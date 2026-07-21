@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { ProgressRing, useWindowDrag } from './TimerWidget'
+import { ProgressRing, useWindowDrag, CloseIcon } from './TimerWidget'
 import { formatClock, formatDurationKo } from '../../utils/time'
 import styles from './TimerWidget.module.css'
 
@@ -107,6 +107,17 @@ export default function RestWidget({ session }) {
       >
         <SkipIcon />
       </button>
+
+      <div className={styles.pillCloseZone}>
+        <button
+          type="button"
+          className={styles.pillClose}
+          title="위젯 숨기기 (휴식은 계속돼요)"
+          onClick={() => window.api.widget.hide()}
+        >
+          <CloseIcon />
+        </button>
+      </div>
     </div>
   )
 }

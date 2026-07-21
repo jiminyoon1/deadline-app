@@ -1,3 +1,24 @@
+@keyframes scrimIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* 모달은 화면 중앙이 트리거이므로 살짝 아래·작게에서 제자리로 — 재질이 나타나는 느낌 */
+@keyframes modalIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
 .overlay {
   position: fixed;
   inset: 0;
@@ -7,6 +28,7 @@
   justify-content: center;
   background: rgba(0, 0, 0, 0.32);
   padding: 20px;
+  animation: scrimIn 150ms ease-out;
 }
 
 .modal {
@@ -20,6 +42,14 @@
   border-radius: 16px;
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
   box-sizing: border-box;
+  animation: modalIn 150ms ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .overlay,
+  .modal {
+    animation: none;
+  }
 }
 
 .title {

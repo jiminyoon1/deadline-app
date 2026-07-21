@@ -11,6 +11,19 @@
   margin: 0;
 }
 
+.emptyState {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+/* 컨셉 설명 한 줄 — 본문(empty)보다 한 단계 조용하게, 색으로만 구분 */
+.emptyHint {
+  color: var(--color-text-faint);
+  font-size: 12px;
+  margin: 0;
+}
+
 .row {
   position: relative;
   display: flex;
@@ -147,8 +160,8 @@
   background: none;
   border-radius: var(--radius-sm);
   color: var(--color-text);
-  font-size: 13px;
-  font-weight: 700;
+  font-size: 14px;
+  font-weight: 500;
   font-family: inherit;
   cursor: pointer;
   transition: background var(--transition-fast);

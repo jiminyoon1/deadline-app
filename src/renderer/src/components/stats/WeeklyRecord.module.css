@@ -201,6 +201,12 @@
   font-variant-numeric: tabular-nums;
 }
 
+/* 완료율은 이 화면에서 유일하게 "잘하고 있다"는 긍정 신호 — success 톤으로 구분해
+   primary(주간 합계)·회색(추정 오차)과 다른 세 번째 의미가 있음을 알린다 */
+.stat b.statValueSuccess {
+  color: var(--color-success);
+}
+
 .statDivider {
   width: 1px;
   height: 12px;

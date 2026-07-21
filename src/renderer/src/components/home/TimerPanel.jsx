@@ -1,5 +1,7 @@
+import { useEffect, useState } from 'react'
 import CircularTimer from './CircularTimer'
 import { formatClock, formatHoursMinutes } from '../../utils/time'
+import { hasSeenHint, markHintSeen } from '../../utils/onboardingHints'
 import styles from './TimerPanel.module.css'
 
 function PauseIcon() {
@@ -40,6 +42,29 @@ function SettingsIcon() {
   )
 }
 
+function InfoIcon() {
+  return (
+    <svg width="13" height="13" viewBox="0 0 20 20" fill="none">
+      <circle cx="10" cy="10" r="8.5" stroke="currentColor" strokeWidth="1.5" />
+      <circle cx="10" cy="6.5" r="1" fill="currentColor" />
+      <path d="M10 9.5v5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+    </svg>
+  )
+}
+
+function CloseIcon() {
+  return (
+    <svg width="10" height="10" viewBox="0 0 20 20" fill="none">
+      <path
+        d="M4.5 4.5l11 11m0-11l-11 11"
+        stroke="currentColor"
+        strokeWidth="1.6"
+        strokeLinecap="round"
+      />
+    </svg>
+  )
+}
+
 function StatsIcon() {
   return (
     <svg width="14" height="14" viewBox="0 0 20 20" fill="none">
@@ -73,6 +98,17 @@ export default function TimerPanel({
 
   const displayName = hasFocus ? activeTask.name : isPreview ? previewTask.name : '태스크를 시작하세요'
 
+  // "시작하기" 대기 화면을 처음 보는 순간에만 자동 진행 안내를 한 번 띄운다.
+  // "이미 봤는가"는 마운트 시 1회만 확정(지연 초기화)하고 이후 절대 안 바꾼다 —
+  // effect 안에서 값을 직접 고치면 StrictMode 이중 실행 때 잘못 판정될 수 있다.
+  const [hintEligible] = useState(() => !hasSeenHint('autoAdvance'))
+  const [hintDismissed, setHintDismissed] = useState(false)
+  const showAutoAdvanceHint = isPreview && hintEligible && !hintDismissed
+
+  useEffect(() => {
+    if (showAutoAdvanceHint) markHintSeen('autoAdvance')
+  }, [showAutoAdvanceHint])
+
   return (
     <div className={styles.root}>
       <p className={styles.taskName}>{displayName}</p>
@@ -94,14 +130,33 @@ export default function TimerPanel({
       />
 
       {isPreview ? (
-        <button
-          type="button"
-          className={styles.startButton}
-          onClick={() => onStart(previewTask.id)}
-        >
-          <PlayIcon />
-          시작하기
-        </button>
+        <div className={styles.previewActions}>
+          <button
+            type="button"
+            className={styles.startButton}
+            onClick={() => onStart(previewTask.id)}
+          >
+            <PlayIcon />
+            시작하기
+          </button>
+          {showAutoAdvanceHint && (
+            <div className={styles.hintCard}>
+              <InfoIcon />
+              <p className={styles.hintText}>
+                타이머가 끝나면 자동으로 완료 처리되고 다음 할 일로 넘어가요. 계속 이어가고 싶으면
+                설정에서 &apos;플로우모도로&apos;를 켜보세요.
+              </p>
+              <button
+                type="button"
+                className={styles.hintClose}
+                aria-label="안내 닫기"
+                onClick={() => setHintDismissed(true)}
+              >
+                <CloseIcon />
+              </button>
+            </div>
+          )}
+        </div>
       ) : (
         <div className={styles.controls}>
           <button

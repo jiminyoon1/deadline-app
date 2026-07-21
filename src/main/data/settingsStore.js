@@ -1,6 +1,7 @@
 import { app } from 'electron'
 import { join } from 'path'
 import fs from 'fs'
+import { readJsonSafe } from './safeJson'
 
 const DEFAULT_SETTINGS = {
   flowmodoroEnabled: false,
@@ -14,12 +15,7 @@ function settingsFilePath() {
 }
 
 export function readSettings() {
-  const filePath = settingsFilePath()
-  if (!fs.existsSync(filePath)) {
-    return { ...DEFAULT_SETTINGS }
-  }
-  const raw = fs.readFileSync(filePath, 'utf-8')
-  return { ...DEFAULT_SETTINGS, ...JSON.parse(raw) }
+  return { ...DEFAULT_SETTINGS, ...readJsonSafe(settingsFilePath(), {}) }
 }
 
 export function writeSettings(settings) {

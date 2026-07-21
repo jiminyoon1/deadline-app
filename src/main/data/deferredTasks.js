@@ -1,6 +1,7 @@
 import { app } from 'electron'
 import { join } from 'path'
 import fs from 'fs'
+import { readJsonSafe } from './safeJson'
 
 function deferredDir() {
   const dir = join(app.getPath('userData'), 'deferred')
@@ -15,12 +16,7 @@ function filePathForDate(date) {
 }
 
 export function readDeferredTasks(date) {
-  const filePath = filePathForDate(date)
-  if (!fs.existsSync(filePath)) {
-    return []
-  }
-  const raw = fs.readFileSync(filePath, 'utf-8')
-  return JSON.parse(raw)
+  return readJsonSafe(filePathForDate(date), [])
 }
 
 export function appendDeferredTask(date, task) {

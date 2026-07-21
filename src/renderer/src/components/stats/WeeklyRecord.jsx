@@ -162,7 +162,10 @@ export default function WeeklyRecord({
 
       <footer className={styles.footer}>
         <span className={styles.stat}>
-          완료율 <b>{completionRate === null ? '—' : `${completionRate}%`}</b>
+          완료율{' '}
+          <b className={styles.statValueSuccess}>
+            {completionRate === null ? '—' : `${completionRate}%`}
+          </b>
         </span>
         <span className={styles.statDivider} />
         <span className={styles.stat}>

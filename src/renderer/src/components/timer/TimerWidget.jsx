@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import WidgetTaskList from './WidgetTaskList'
 import { formatClock, formatDurationKo } from '../../utils/time'
+import { hasSeenHint, markHintSeen } from '../../utils/onboardingHints'
 import styles from './TimerWidget.module.css'
 
 export function ProgressRing({ ratio, size, radius, className, progressClassName }) {
@@ -17,6 +18,20 @@ export function ProgressRing({ ratio, size, radius, className, progressClassName
         r={radius}
         strokeDasharray={circumference}
         strokeDashoffset={circumference * (1 - clamped)}
+      />
+    </svg>
+  )
+}
+
+// 미니 버블의 작은 X와 같은 글리프 — 알약형 화면들에도 동일하게 쓴다.
+export function CloseIcon() {
+  return (
+    <svg viewBox="0 0 12 12" width="10" height="10">
+      <path
+        d="M2.5 2.5l7 7m0-7l-7 7"
+        stroke="currentColor"
+        strokeWidth="1.6"
+        strokeLinecap="round"
       />
     </svg>
   )
@@ -175,6 +190,46 @@ function ExpandedPill({ timer, task, ratio, subText, listOpen, onToggleList, onC
       >
         <ListIcon />
       </button>
+
+      {/* 미니 버블과 같은 방식: 모서리에 hover할 때만 나타난다. 알약 배경 전체가
+          -webkit-app-region:drag라서, 버튼만 no-drag로 두면 접근하는 동안 마우스 이동이
+          드래그 영역에 가로채여 hover가 끊긴다. 이 구역 자체를 no-drag로 넉넉히 잡아서
+          접근 경로가 드래그 픽셀을 지나지 않게 한다. */}
+      <div className={styles.pillCloseZone}>
+        <button
+          type="button"
+          className={styles.pillClose}
+          title="위젯 숨기기 (타이머는 계속돼요)"
+          onClick={() => window.api.widget.hide()}
+        >
+          <CloseIcon />
+        </button>
+      </div>
+    </div>
+  )
+}
+
+function InfoIcon() {
+  return (
+    <svg width="13" height="13" viewBox="0 0 20 20" fill="none">
+      <circle cx="10" cy="10" r="8.5" stroke="currentColor" strokeWidth="1.5" />
+      <circle cx="10" cy="6.5" r="1" fill="currentColor" />
+      <path d="M10 9.5v5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+    </svg>
+  )
+}
+
+// 알약 아래 말풍선 — 위젯을 처음 띄운 순간에만 한 번 뜬다.
+function WidgetHideHint({ onClose }) {
+  return (
+    <div className={styles.hintBubble}>
+      <InfoIcon />
+      <p className={styles.hintText}>
+        필요 없을 땐 알약을 눌러 작게 만들고, X로 숨길 수 있어요. 숨겨도 타이머는 계속 흘러요.
+      </p>
+      <button type="button" className={styles.hintClose} aria-label="안내 닫기" onClick={onClose}>
+        <CloseIcon />
+      </button>
     </div>
   )
 }
@@ -208,6 +263,31 @@ export default function TimerWidget({ session, task }) {
     window.addEventListener('blur', handleBlur)
     return () => window.removeEventListener('blur', handleBlur)
   }, [])
+
+  // 위젯을 처음 띄운 순간에만 알약 아래 말풍선을 보여준다.
+  // "이미 봤는가"는 마운트 시 1회만 확정(useState 지연 초기화)하고 이후 절대 안 바꾼다 —
+  // effect 안에서 ref를 직접 고쳐버리면 StrictMode의 이중 실행(개발 모드에서 effect를
+  // 일부러 두 번 연달아 돌려 정리 누락을 잡아냄) 때 두 번째 실행이 "이미 봤다"로 잘못
+  // 읽어 방금 띄운 걸 바로 꺼버린다. 렌더 값에서 파생시키면 이 문제가 아예 생기지 않는다.
+  const [hintEligible] = useState(() => !hasSeenHint('widgetHide'))
+  const [hintDismissed, setHintDismissed] = useState(false)
+  const showHideHint = mode === 'pill' && hintEligible && !hintDismissed
+
+  // 말풍선이 뜨는 동안은 창을 키워야 해서(widget:setHintVisible) 상태를 메인 프로세스에
+  // 동기화한다. 이 effect는 showHideHint 값을 그대로 반영만 할 뿐 자기 자신이 참조하는
+  // 값을 바꾸지 않으므로 StrictMode 이중 실행에도 항상 같은 결과를 낸다.
+  useEffect(() => {
+    window.api.widget.setHintVisible(showHideHint)
+    if (showHideHint) markHintSeen('widgetHide')
+  }, [showHideHint])
+
+  useEffect(() => {
+    return () => window.api.widget.setHintVisible(false)
+  }, [])
+
+  function dismissHint() {
+    setHintDismissed(true)
+  }
 
   const plannedSeconds = task.plannedSeconds ?? (task.plannedMinutes || 0) * 60
   const ratio = timer.isOvertime
@@ -248,6 +328,7 @@ export default function TimerWidget({ session, task }) {
         onCollapse={() => setMode('mini')}
       />
       {mode === 'list' && <WidgetTaskList session={session} />}
+      {showHideHint && <WidgetHideHint onClose={dismissHint} />}
     </div>
   )
 }

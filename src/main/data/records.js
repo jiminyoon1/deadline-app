@@ -1,6 +1,7 @@
 import { app } from 'electron'
 import { join } from 'path'
 import fs from 'fs'
+import { readJsonSafe } from './safeJson'
 
 function recordsDir() {
   const dir = join(app.getPath('userData'), 'records')
@@ -15,12 +16,7 @@ function filePathForDate(date) {
 }
 
 export function readRecord(date) {
-  const filePath = filePathForDate(date)
-  if (!fs.existsSync(filePath)) {
-    return null
-  }
-  const raw = fs.readFileSync(filePath, 'utf-8')
-  return JSON.parse(raw)
+  return readJsonSafe(filePathForDate(date), null)
 }
 
 export function writeRecord(date, record) {

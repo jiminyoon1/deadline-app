@@ -1,5 +1,7 @@
 import { app, Tray, Menu, nativeImage } from 'electron'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
+import { join } from 'path'
+import fs from 'fs'
 import icon from '../../resources/icon.png?asset'
 import trayIconPath from '../../resources/trayTemplate.png?asset'
 import { createMainWindow, getMainWindow, showMainWindow } from './windows/mainWindow'
@@ -8,6 +10,28 @@ import { registerIpcHandlers } from './ipc'
 import { sessionStore } from './store/sessionStore'
 
 let tray = null
+
+// 예상 못 한 에러로 죽어도 로그 한 줄 없이 조용히 사라지지 않게 남긴다.
+function logCrash(label, err) {
+  try {
+    const line = `[${new Date().toISOString()}] ${label}: ${err?.stack || err}\n`
+    fs.appendFileSync(join(app.getPath('userData'), 'crash.log'), line, 'utf-8')
+  } catch {
+    // 로그 남기기조차 실패하면 더 할 수 있는 게 없다.
+  }
+}
+
+// uncaughtException 리스너를 달면 Node 기본 동작(로그 후 종료)이 사라지고 프로세스가
+// 깨진 상태로 계속 실행된다 — 로그만 남기고 명시적으로 종료해 기본 동작을 유지한다.
+process.on('uncaughtException', (err) => {
+  logCrash('uncaughtException', err)
+  app.exit(1)
+})
+
+// 처리 안 된 프로미스 거부는 우발적인 경우가 많아 종료까진 하지 않고 로그만 남긴다.
+process.on('unhandledRejection', (reason) => {
+  logCrash('unhandledRejection', reason)
+})
 
 function createTray() {
   // macOS에서는 템플릿 이미지로 등록해 라이트/다크 메뉴바 색상에 자동 대응한다.
