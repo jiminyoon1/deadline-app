@@ -22,7 +22,7 @@ const SUMMARY_BASE_HEIGHT = 180
 const SUMMARY_ROW_HEIGHT = 36
 
 // 첫 등장 말풍선 힌트(알약 아래 말풍선 카드)가 뜨는 동안만 창을 이만큼 더 키운다.
-const HINT_EXTRA_HEIGHT = 92
+const HINT_EXTRA_HEIGHT = 130
 
 let widgetMode = 'expanded' // 'mini' | 'expanded' | 'list'
 let lastStatus = 'idle'

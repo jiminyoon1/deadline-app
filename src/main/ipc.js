@@ -9,6 +9,7 @@ import {
   getWidgetPosition,
   moveWidgetTo
 } from './windows/widgetWindow'
+import { showMainWindow } from './windows/mainWindow'
 
 export function registerIpcHandlers() {
   ipcMain.handle('session:get', () => sessionStore.getState())
@@ -92,6 +93,8 @@ export function registerIpcHandlers() {
   ipcMain.handle('records:getByDate', (_e, date) => readRecord(date))
   ipcMain.handle('records:listDates', () => listRecordDates())
   ipcMain.handle('records:readAll', () => readAllRecords())
+
+  ipcMain.handle('mainWindow:show', () => showMainWindow())
 
   ipcMain.handle('widget:show', () => showWidgetWindow())
   ipcMain.handle('widget:hide', () => hideWidgetWindow())

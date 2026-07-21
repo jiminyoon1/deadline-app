@@ -35,7 +35,8 @@ export default function RestWidget({ session }) {
     timer.restTotalSeconds > 0 ? 1 - timer.restRemainingSeconds / timer.restTotalSeconds : 0
 
   const handleMiniMouseDown = useWindowDrag(() => setMode('pill'))
-  const handleBodyMouseDown = useWindowDrag(() => setMode('mini'))
+  const handleRingMouseDown = useWindowDrag(() => setMode('mini'))
+  const handleTextMouseDown = useWindowDrag(() => window.api.mainWindow.show())
 
   if (mode === 'mini') {
     return (
@@ -80,20 +81,22 @@ export default function RestWidget({ session }) {
 
   return (
     <div className={styles.pill}>
-      <div
-        className={styles.pillBody}
-        role="button"
-        title="작게 보기 (드래그로 이동)"
-        onMouseDown={handleBodyMouseDown}
-      >
-        <ProgressRing
-          ratio={ratio}
-          size={40}
-          radius={15.5}
-          className={styles.ring}
-          progressClassName={styles.ringProgressRest}
-        />
-        <div className={styles.textColumn}>
+      <div className={styles.pillBody}>
+        <div role="button" title="작게 보기 (드래그로 이동)" onMouseDown={handleRingMouseDown}>
+          <ProgressRing
+            ratio={ratio}
+            size={40}
+            radius={15.5}
+            className={styles.ring}
+            progressClassName={styles.ringProgressRest}
+          />
+        </div>
+        <div
+          className={styles.textColumn}
+          role="button"
+          title="메인 창 열기 (드래그로 이동)"
+          onMouseDown={handleTextMouseDown}
+        >
           <p className={styles.taskName}>휴식 중</p>
           <p className={styles.subTextRest}>{formatDurationKo(timer.restRemainingSeconds)} 남음</p>
         </div>

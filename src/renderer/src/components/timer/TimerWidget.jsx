@@ -145,18 +145,21 @@ function ListIcon() {
 
 function ExpandedPill({ timer, task, ratio, subText, listOpen, onToggleList, onCollapse }) {
   const isPaused = timer.status === 'paused'
-  // 본문(링·텍스트)은 드래그하면 위젯 이동, 살짝 누르면 미니로 접힌다.
-  const handleBodyMouseDown = useWindowDrag(onCollapse)
+  // 링은 눌러서 미니로 접고, 태스크명 쪽은 눌러서 메인 창을 연다 — 둘 다 드래그로는 위젯 이동.
+  const handleRingMouseDown = useWindowDrag(onCollapse)
+  const handleTextMouseDown = useWindowDrag(() => window.api.mainWindow.show())
   return (
     <div className={styles.pill}>
-      <div
-        className={styles.pillBody}
-        role="button"
-        title="작게 보기 (드래그로 이동)"
-        onMouseDown={handleBodyMouseDown}
-      >
-        <ProgressRing ratio={ratio} size={40} radius={15.5} className={styles.ring} />
-        <div className={styles.textColumn}>
+      <div className={styles.pillBody}>
+        <div role="button" title="작게 보기 (드래그로 이동)" onMouseDown={handleRingMouseDown}>
+          <ProgressRing ratio={ratio} size={40} radius={15.5} className={styles.ring} />
+        </div>
+        <div
+          className={styles.textColumn}
+          role="button"
+          title="메인 창 열기 (드래그로 이동)"
+          onMouseDown={handleTextMouseDown}
+        >
           <p className={styles.taskName}>{task.name}</p>
           <p className={timer.isOvertime ? styles.subTextOvertime : styles.subText}>{subText}</p>
         </div>
@@ -225,7 +228,9 @@ function WidgetHideHint({ onClose }) {
     <div className={styles.hintBubble}>
       <InfoIcon />
       <p className={styles.hintText}>
-        필요 없을 땐 알약을 눌러 작게 만들고, X로 숨길 수 있어요. 숨겨도 타이머는 계속 흘러요.
+        링은 작게, 태스크명은 메인 창 열기.
+        <br />
+        목록 클릭하면 수정, X를 눌러도 타이머는 계속 흘러요.
       </p>
       <button type="button" className={styles.hintClose} aria-label="안내 닫기" onClick={onClose}>
         <CloseIcon />

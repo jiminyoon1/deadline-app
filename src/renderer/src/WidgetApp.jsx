@@ -64,7 +64,16 @@ export default function WidgetApp() {
   return (
     <div className={styles.shell}>
       <div className={styles.card}>
-        <p className={styles.idle}>메인 창에서 태스크를 시작해주세요</p>
+        <div className={styles.idle}>
+          <p>메인 창에서 태스크를 시작해주세요</p>
+          <button
+            type="button"
+            className={styles.idleButton}
+            onClick={() => window.api.mainWindow.show()}
+          >
+            메인 창 열기
+          </button>
+        </div>
       </div>
     </div>
   )

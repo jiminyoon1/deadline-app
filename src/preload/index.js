@@ -34,6 +34,9 @@ const api = {
   settings: {
     update: (partial) => ipcRenderer.invoke('settings:update', partial)
   },
+  mainWindow: {
+    show: () => ipcRenderer.invoke('mainWindow:show')
+  },
   records: {
     getByDate: (date) => ipcRenderer.invoke('records:getByDate', date),
     listDates: () => ipcRenderer.invoke('records:listDates'),

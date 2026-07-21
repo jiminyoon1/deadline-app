@@ -67,6 +67,12 @@
 | `widget:show` | invoke | 없음 | 위젯 표시 |
 | `widget:hide` | invoke | 없음 | 위젯 숨김 |
 
+## mainWindow — 메인 창 제어
+
+| 채널 | 방향 | 요청 | 설명 |
+|---|---|---|---|
+| `mainWindow:show` | invoke | 없음 | 메인 창 표시 (닫혀서 파괴됐으면 재생성). 위젯에서 메인 창으로 돌아갈 방법이 트레이 아이콘뿐이면 안 되므로 위젯 UI에서도 호출한다 |
+
 ## 채널 추가 절차
 
 1. `src/main/ipc.js`의 `registerIpcHandlers()`에 `ipcMain.handle('도메인:동작', ...)` 추가.

@@ -1,4 +1,4 @@
-import { app, Tray, Menu, nativeImage } from 'electron'
+import { app, Tray, Menu, nativeImage, session } from 'electron'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import { join } from 'path'
 import fs from 'fs'
@@ -111,4 +111,7 @@ app.on('window-all-closed', () => {
 
 app.on('before-quit', () => {
   sessionStore.stop()
+  // localStorage(온보딩 힌트 등)는 몇 초 지연 후 디스크에 쓰인다 — 종료 직전 강제로 밀어넣지
+  // 않으면 힌트를 본 직후 바로 종료했을 때 그 기록이 저장되지 않아 다음 실행에 다시 뜬다.
+  session.defaultSession.flushStorageData()
 })

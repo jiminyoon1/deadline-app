@@ -57,7 +57,8 @@ export default function NextTaskWait({ session }) {
   const [listOpen, setListOpen] = useState(false)
   const listOpenRef = useRef(listOpen)
   const next = nextPendingTask(session)
-  const handleBodyMouseDown = useWindowDrag(() => {})
+  // 대기 화면엔 미니 모드가 없어서, 여기 텍스트 영역은 그냥 메인 창을 연다.
+  const handleBodyMouseDown = useWindowDrag(() => window.api.mainWindow.show())
 
   // 목록을 펼치면 위젯 창도 함께 커진다
   useEffect(() => {
@@ -91,7 +92,7 @@ export default function NextTaskWait({ session }) {
         <div
           className={pillStyles.pillBody}
           role="button"
-          title="드래그로 이동"
+          title="메인 창 열기 (드래그로 이동)"
           onMouseDown={handleBodyMouseDown}
         >
           <div className={pillStyles.textColumn}>
