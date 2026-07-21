@@ -1,0 +1,36 @@
+.root {
+  flex: 1;
+  display: flex;
+  min-height: 0;
+  padding: clamp(12px, 2.5vw, 20px);
+  box-sizing: border-box;
+  background: var(--color-bg-app);
+}
+
+.card {
+  flex: 1;
+  display: flex;
+  min-width: 0;
+  min-height: 0;
+  background: var(--color-bg);
+  color: var(--color-text);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+}
+
+.left {
+  flex: 0 0 34%;
+  min-width: 220px;
+  max-width: 320px;
+  display: flex;
+  min-height: 0;
+}
+
+.right {
+  flex: 1;
+  display: flex;
+  min-width: 260px;
+  min-height: 0;
+  border-left: 1px solid var(--color-border);
+}

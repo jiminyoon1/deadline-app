@@ -1,0 +1,41 @@
+/* 카드 헤더 — 프레임에 고정, 아래 콘텐츠만 스크롤된다 (PageLayout 참고) */
+.header {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--color-divider);
+}
+
+/* 타이포 스케일의 title 역할(18/700) — 이 화면에서 700 굵기를 쓰는 유일한 곳 */
+.title {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+/* 홈 좌하단 내비 버튼(TimerPanel.navButton)과 동일한 언어 — 이질감 제거의 핵심 */
+.navButton {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border-radius: 999px;
+  border: 1px solid var(--color-border);
+  background: var(--color-bg);
+  color: var(--color-text-sub);
+  font-size: 12px;
+  font-weight: 500;
+  font-family: inherit;
+  cursor: pointer;
+  transition: opacity var(--transition-fast), color var(--transition-fast);
+}
+
+.navButton:hover {
+  opacity: 0.7;
+  color: var(--color-text);
+}
+
+.navButton:active {
+  transform: scale(0.97);
+}

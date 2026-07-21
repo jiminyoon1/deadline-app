@@ -1,0 +1,14 @@
+@import './base.css';
+
+body {
+  overflow: hidden;
+  user-select: none;
+}
+
+/* height를 고정해야 내부 리스트 영역(overflow-y: auto)까지 스크롤이 위임된다.
+   min-height면 내용이 길 때 루트가 늘어나 body(overflow: hidden)에서 잘려버린다. */
+#root {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}

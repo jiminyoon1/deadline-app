@@ -1,0 +1,191 @@
+/* 디자인 토큰 (timestamp-home.pen: Always-On-Top Floating Timer - Context) */
+
+/* ── 미니 버블 (기본 상태, s0O8rS) ── */
+.miniWrap {
+  position: relative;
+  width: 64px;
+  height: 64px;
+}
+
+.miniBubble {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  padding: 0;
+  border: none;
+  border-radius: 32px;
+  background: var(--color-bg);
+  box-shadow: var(--shadow-float);
+  cursor: pointer;
+}
+
+.miniRing {
+  position: absolute;
+  inset: 4px;
+  transform: rotate(-90deg);
+}
+
+.miniTime,
+.miniTimeOvertime {
+  position: relative;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--color-text);
+  font-variant-numeric: tabular-nums;
+}
+
+.miniTimeOvertime {
+  color: var(--color-primary);
+}
+
+/* hover 시에만 우상단에 나타나는 숨김 X — 세션은 유지된다 */
+.miniClose {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  padding: 0;
+  border: none;
+  border-radius: 9px;
+  background: var(--color-bg);
+  color: var(--color-text-sub);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+}
+
+.miniWrap:hover .miniClose {
+  display: flex;
+}
+
+.miniClose:hover {
+  background: var(--color-divider);
+}
+
+/* ── 확장 알약 (c9s8D) ── */
+.pill {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 300px;
+  height: 60px;
+  padding: 8px 16px 8px 10px;
+  border-radius: 30px;
+  background: var(--color-bg);
+  box-shadow: var(--shadow-float);
+  -webkit-app-region: drag;
+}
+
+/* 확장 알약 + 할 일 드롭다운을 세로로 쌓는 컨테이너 */
+.stack {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+}
+
+/* 확장 알약의 본문(링·텍스트) — 클릭하면 미니로 접힌다 */
+.pillBody {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+  min-width: 0;
+  cursor: pointer;
+  -webkit-app-region: no-drag;
+}
+
+.ring {
+  flex-shrink: 0;
+  transform: rotate(-90deg);
+}
+
+.ringTrack {
+  fill: none;
+  stroke: var(--color-divider);
+  stroke-width: 3.5;
+}
+
+.ringProgress {
+  fill: none;
+  stroke: var(--color-primary);
+  stroke-width: 3.5;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 0.2s linear;
+}
+
+.textColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+  flex: 1;
+}
+
+.taskName {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.subText,
+.subTextOvertime {
+  font-size: 11px;
+  color: var(--color-text-sub);
+  font-variant-numeric: tabular-nums;
+}
+
+.subTextOvertime {
+  color: var(--color-primary);
+}
+
+/* 휴식 위젯 — 진행 링·보조 텍스트만 초록, 구조는 진행 중 위젯과 동일 */
+.ringProgressRest {
+  fill: none;
+  stroke: var(--color-success);
+  stroke-width: 3.5;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 0.2s linear;
+}
+
+.subTextRest {
+  font-size: 11px;
+  color: var(--color-success);
+  font-variant-numeric: tabular-nums;
+}
+
+.iconButton {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border: none;
+  border-radius: 14px;
+  background: transparent;
+  color: var(--color-text-sub);
+  cursor: pointer;
+  transition: background 0.15s ease;
+  -webkit-app-region: no-drag;
+}
+
+.iconButton:hover {
+  background: var(--color-divider);
+}
+
+/* 목록이 열려 있는 동안의 ≡ 버튼 */
+.iconButtonActive {
+  composes: iconButton;
+  background: var(--color-primary-tint);
+  color: var(--color-primary);
+}
+

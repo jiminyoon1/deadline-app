@@ -1,0 +1,88 @@
+/* 디자인: Daily Summary Popup (Y1QLt) — 위젯 크기에 맞게 스케일 조정 */
+.screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  gap: 10px;
+  padding: 18px 16px 16px;
+  text-align: center;
+  overflow-y: auto;
+}
+
+.title {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.total {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-primary);
+}
+
+.taskList {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 2px 12px;
+  border-radius: 10px;
+  background: var(--color-bg-soft);
+  font-size: 12px;
+  /* 창이 태스크 개수에 맞춰 커지므로(widgetWindow.js summarySize) 높이 제한 없음.
+     화면보다 태스크가 많아 창이 workArea에 걸린 경우에만 스크롤이 생긴다 */
+  flex-shrink: 1;
+  min-height: 0;
+  overflow-y: auto;
+}
+
+.taskRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--color-divider);
+  color: var(--color-text);
+  text-align: left;
+}
+
+.taskRow:last-child {
+  border-bottom: none;
+}
+
+.taskRow span:first-child {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.taskRow span:last-child {
+  flex-shrink: 0;
+  font-size: 11px;
+  color: var(--color-text-sub);
+  font-variant-numeric: tabular-nums;
+  /* "예정 1시간 30분 · 실제 2시간"처럼 길어도 두 줄로 감기지 않아야
+     창 높이 계산(SUMMARY_ROW_HEIGHT)과 어긋나지 않는다 */
+  white-space: nowrap;
+}
+
+.confirmButton {
+  margin-top: 2px;
+  padding: 9px 32px;
+  border-radius: 10px;
+  border: none;
+  background: var(--color-primary);
+  color: var(--color-bg);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: filter 0.15s ease;
+  -webkit-app-region: no-drag;
+}
+
+.confirmButton:hover {
+  filter: brightness(0.95);
+}

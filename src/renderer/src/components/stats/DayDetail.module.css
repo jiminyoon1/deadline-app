@@ -1,0 +1,109 @@
+/* 하루 상세 — 프레임 카드 안의 평평한 섹션 */
+.card {
+  background: transparent;
+}
+
+.header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.title {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.totals {
+  font-size: 12px;
+  color: var(--color-text-sub);
+  font-variant-numeric: tabular-nums;
+}
+
+.empty {
+  font-size: 12px;
+  color: var(--color-text-faint);
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* 이름(고정) · 막대(가변) · 분(고정) · 오차(고정) — 열이 정렬돼야 비교가 된다 */
+.row {
+  display: grid;
+  grid-template-columns: 132px 1fr 76px 44px;
+  align-items: center;
+  gap: 12px;
+}
+
+.name,
+.nameUndone {
+  font-size: 12px;
+  color: var(--color-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.nameUndone {
+  color: var(--color-text-faint);
+}
+
+.barArea {
+  min-width: 0;
+}
+
+.track {
+  position: relative;
+  height: 6px;
+  border-radius: 3px;
+  background: var(--color-divider);
+  overflow: visible;
+}
+
+.fill {
+  height: 100%;
+  border-radius: 3px;
+  background: var(--color-primary);
+  transition: width var(--transition-fast);
+}
+
+/* 계획 기준선 — 막대보다 살짝 크게 튀어나와 눈금처럼 읽힌다 */
+.plannedMark {
+  position: absolute;
+  top: -3px;
+  width: 2px;
+  height: 12px;
+  border-radius: 1px;
+  background: var(--color-text-faint);
+  transform: translateX(-1px);
+}
+
+.minutes {
+  font-size: 12px;
+  color: var(--color-text-sub);
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.errorOver,
+.errorUnder {
+  font-size: 12px;
+  font-weight: 500;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+/* 초과만 primary — "계획을 넘겼다"는 의미가 있는 색 */
+.errorOver {
+  color: var(--color-primary);
+}
+
+.errorUnder {
+  color: var(--color-text-sub);
+}

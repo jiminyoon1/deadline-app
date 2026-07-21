@@ -1,0 +1,5 @@
+/* 플로팅 위젯 전용: 투명 프레임리스 창이므로 배경을 비우고, 홈과 같은 서체를 쓴다 */
+body {
+  background: transparent;
+  font-family: 'Noto Sans KR', 'Noto Sans', sans-serif;
+}

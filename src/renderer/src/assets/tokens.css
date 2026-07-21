@@ -1,0 +1,37 @@
+/* 디자인 토큰 — 앱 전체(메인 창·위젯)의 단일 소스.
+   색을 새로 쓸 때는 hex를 직접 쓰지 말고 반드시 여기 토큰을 참조한다. */
+:root {
+  /* 색 — 브랜드 */
+  --color-primary: #e8573a; /* 타이머·활성 상태·선택 텍스트 */
+  --color-primary-tint: #fff0ed; /* 선택/활성 배경 틴트 */
+  --color-primary-tint-strong: #ffe3dd; /* 틴트 hover */
+  --color-success: #3e9b6e; /* 긍정 피드백 (휴식 화면 등) */
+  --color-done: #6b6b6b; /* 완료 체크 — 텍스트 회색보다 진하고 검정보다 연한 전용 톤 */
+
+  /* 색 — 표면 */
+  --color-bg: #ffffff;
+  --color-bg-soft: #f5f5f5; /* hover, 카드 안 서브 영역 */
+  --color-bg-app: #f4f4f5; /* 카드 바깥 창 배경 */
+  --color-border: #e8e8e8;
+  --color-divider: #f0f0f0; /* 리스트 구분선, 링 트랙 */
+
+  /* 색 — 텍스트 3단계 */
+  --color-text: #1a1a1a;
+  --color-text-sub: #888888; /* 보조 텍스트, 시간 라벨 */
+  --color-text-faint: #aaaaaa; /* 비활성 아이콘, 플레이스홀더 */
+
+  /* 형태 */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+
+  /* 그림자 */
+  --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.07); /* 메인 창 카드 */
+  --shadow-float:
+    0 6px 18px rgba(0, 0, 0, 0.19),
+    0 1px 2px rgba(0, 0, 0, 0.08); /* 플로팅 위젯 */
+  --shadow-popover: 0 8px 24px rgba(0, 0, 0, 0.12);
+
+  /* 모션 */
+  --transition-fast: 0.15s ease;
+}

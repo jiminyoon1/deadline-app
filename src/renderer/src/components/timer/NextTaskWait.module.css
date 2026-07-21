@@ -1,0 +1,45 @@
+/* 대기 알약 전용 보조 스타일 — 알약 골격은 TimerWidget.module.css를 재사용 */
+
+/* 진행 중 알약의 링(40px)이 있던 자리에 같은 크기의 시작 버튼을 둬서
+   상태가 바뀌어도 요소들의 시작선이 흔들리지 않게 한다 */
+.startCircle {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 20px;
+  background: var(--color-primary);
+  color: var(--color-bg);
+  cursor: pointer;
+  transition: filter 0.15s ease, transform 0.1s ease;
+  -webkit-app-region: no-drag;
+}
+
+.startCircle:hover {
+  filter: brightness(0.95);
+}
+
+.startCircle:active {
+  transform: scale(0.94);
+}
+
+/* 목록 패널 맨 아래 하루 마무리 — 구분선 위의 조용한 텍스트 행 */
+.finishDay {
+  margin-top: 4px;
+  padding: 8px 6px 4px;
+  border: none;
+  border-top: 1px solid var(--color-divider);
+  background: transparent;
+  font-size: 11px;
+  color: var(--color-text-faint);
+  cursor: pointer;
+  transition: color 0.15s ease;
+  -webkit-app-region: no-drag;
+}
+
+.finishDay:hover {
+  color: var(--color-text-sub);
+}

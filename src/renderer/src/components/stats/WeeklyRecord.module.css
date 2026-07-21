@@ -1,0 +1,213 @@
+/* 주간 기록 그리드 — 기록 탭의 첫 화면.
+   페이지 프레임(PageLayout 흰 카드)이 표면을 담당하므로 여기는 평평한 섹션.
+   화면의 주인공은 "주간 총 집중" 숫자 하나. 나머지는 회색 3단계로만 말한다. */
+.card {
+  background: transparent;
+}
+
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 20px;
+}
+
+.titleRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* 페이지 제목(18/700)과 굵기로 경쟁하지 않는다 — 카드의 주인공은 제목이 아니라 합계 숫자다.
+   500으로 낮춰야 위의 페이지 타이틀이 유일한 굵은 텍스트로 남는다. */
+.title {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.range {
+  margin-top: 4px;
+  font-size: 12px;
+  color: var(--color-text-sub);
+}
+
+.weekNav {
+  display: flex;
+  gap: 4px;
+}
+
+.navButton {
+  width: 32px;
+  height: 32px;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--color-text-faint);
+  font-size: 14px;
+  cursor: pointer;
+  transition: background var(--transition-fast);
+}
+
+.navButton:hover:not(:disabled) {
+  background: var(--color-bg-soft);
+  color: var(--color-text);
+}
+
+.navButton:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+.totalCol {
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.totalLabel {
+  font-size: 12px;
+  color: var(--color-text-sub);
+  margin-bottom: 4px;
+}
+
+/* 화면당 하나의 대담함 — 주간 합계만 primary + 큰 크기 */
+.totalValue {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--color-primary);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+}
+
+.day,
+.dayActive {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 12px 4px 16px;
+  min-height: 148px;
+  border: none;
+  background: transparent;
+  border-left: 1px solid var(--color-divider);
+  font-family: inherit;
+  cursor: pointer;
+  border-radius: 0;
+  transition: background var(--transition-fast);
+}
+
+.day:first-child,
+.dayActive:first-child {
+  border-left: none;
+}
+
+.day:hover:not(:disabled) {
+  background: var(--color-bg-soft);
+}
+
+.day:disabled {
+  cursor: default;
+}
+
+/* 선택된 날: 완료 칩의 틴트색과 겹치지 않게 회색 배경 + 하단 인디케이터로 표시 */
+.dayActive {
+  background: var(--color-bg-soft);
+  box-shadow: inset 0 -2px 0 var(--color-primary);
+}
+
+.dayLabel,
+.dayLabelToday {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-text);
+}
+
+.dayLabelToday {
+  color: var(--color-primary);
+}
+
+.dayDate {
+  font-size: 11px;
+  color: var(--color-text-faint);
+}
+
+.dayTotal,
+.dayTotalToday {
+  margin-top: 4px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-text);
+  font-variant-numeric: tabular-nums;
+}
+
+.dayTotalToday {
+  color: var(--color-primary);
+}
+
+.chips {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 4px;
+  width: 100%;
+  margin-top: 8px;
+}
+
+.chipDone,
+.chipPlain,
+.chipMore {
+  font-size: 11px;
+  line-height: 1.4;
+  padding: 2px 6px;
+  border-radius: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: center;
+}
+
+.chipDone {
+  background: var(--color-primary-tint);
+  color: var(--color-text);
+}
+
+.chipPlain {
+  color: var(--color-text-faint);
+}
+
+.chipMore {
+  color: var(--color-text-faint);
+}
+
+/* 구분선은 섹션 경계(StatsView)의 몫 — 여기 또 그으면 선이 이중으로 쌓인다 */
+.footer {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 20px;
+  font-size: 12px;
+  color: var(--color-text-sub);
+}
+
+.stat b {
+  font-weight: 500;
+  color: var(--color-text);
+  font-variant-numeric: tabular-nums;
+}
+
+.statDivider {
+  width: 1px;
+  height: 12px;
+  background: var(--color-divider);
+}
+
+.sentence {
+  margin-left: auto;
+  color: var(--color-text-sub);
+}

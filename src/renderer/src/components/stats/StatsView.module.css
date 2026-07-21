@@ -1,0 +1,58 @@
+/* 프레임(PageLayout 카드)이 표면·제목을 담당 — 여기는 내용 배치만 */
+.container {
+  padding: 24px 32px 32px;
+}
+
+.empty {
+  color: var(--color-text-faint);
+}
+
+/* 섹션 사이는 구분선 + 32 — 섹션 내부 간격(12~16)보다 확실히 넓게 */
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.stack > * + * {
+  border-top: 1px solid var(--color-divider);
+  padding-top: 32px;
+}
+
+.heatmapCard {
+  background: transparent;
+}
+
+/* Settings의 groupTitle과 같은 "섹션 라벨" 역할 — caption/500/text-sub */
+.sectionTitle {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--color-text-sub);
+  margin-bottom: 16px;
+}
+
+/* PrimeTimeHeatmap가 참조하는 클래스 (기존 유지) */
+.heatmap {
+  display: flex;
+  gap: 3px;
+}
+
+.heatmapCellWrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  flex: 1;
+}
+
+.heatmapCell {
+  width: 100%;
+  height: 28px;
+  border-radius: 4px;
+  background: var(--color-primary);
+}
+
+.heatmapLabel {
+  font-size: 9px;
+  color: var(--color-text-faint);
+}

@@ -1,0 +1,43 @@
+.root {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  min-width: 0;
+  min-height: 0;
+  padding: clamp(20px, 5%, 28px) clamp(20px, 4%, 32px);
+  box-sizing: border-box;
+}
+
+.header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.date {
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--color-text-sub);
+  flex-shrink: 0;
+}
+
+.focus {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--color-primary);
+  flex-shrink: 0;
+}
+
+.heading {
+  font-size: 18px;
+  font-weight: 700;
+  margin: 0;
+}
+
+.listArea {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+}
